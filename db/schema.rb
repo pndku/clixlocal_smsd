@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803024058) do
+ActiveRecord::Schema.define(:version => 20120803024059) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -45,5 +45,18 @@ ActiveRecord::Schema.define(:version => 20120803024058) do
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "kpis", :force => true do |t|
+    t.date    "date"
+    t.integer "petition_signatures",                    :default => 0
+    t.integer "petition_recommendations",               :default => 0
+    t.integer "tweets",                                 :default => 0
+    t.integer "facebook_discussions",                   :default => 0
+    t.integer "negative_reviews_on_bhbhc_fb",           :default => 0
+    t.integer "negative_reviews_on_barnabas_health_fb", :default => 0
+    t.integer "email_complaints",                       :default => 0
+  end
+
+  add_index "kpis", ["date"], :name => "index_kpis_on_date", :unique => true
 
 end
