@@ -1,0 +1,12 @@
+= form_for :dump, :url=>{:action => "import_csv"}, :html => {:multipart => true, :class => "formtastic"} do |f|
+  %fieldset{:class => "inputs"}
+    %ol
+      %li{:class => "file input required"}
+        %label{:class => "label", :for => "dump_file"} Select a CSV File :
+        = f.file_field :file
+  %fieldset{:class => "buttons"}
+    %ol
+      %li{:class => "commit button"}
+        = submit_tag "Import"
+      %li{:class => "cancel"}
+        = link_to "Cancel", admin_accounts_path
