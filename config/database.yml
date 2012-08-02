@@ -15,10 +15,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: smsd_development
+  database: clixlocal_smsd
   pool: 5
-  username: smsd
-  password:
+  username: postgres
+  password: fuckingpanda
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
