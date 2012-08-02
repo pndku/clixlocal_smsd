@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803024060) do
+ActiveRecord::Schema.define(:version => 20120803024061) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -70,6 +70,12 @@ ActiveRecord::Schema.define(:version => 20120803024060) do
     t.string   "blog_post_sentiment"
     t.string   "signal_tag_sentiment"
     t.integer  "priority",             :default => 0
+  end
+
+  create_table "statuses", :force => true do |t|
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
