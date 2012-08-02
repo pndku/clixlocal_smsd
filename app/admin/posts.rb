@@ -23,7 +23,7 @@ ActiveAdmin.register Post do
   end
 
   index do
-    column "External article ID", :article_id
+    column :article_id
     column :headline
     column :author
     column :publish_date
@@ -32,7 +32,7 @@ ActiveAdmin.register Post do
 
   form :html => { :multipart => true } do |f|
     f.inputs "Common information" do
-      f.input :article_id, :label => "External article ID"
+      f.input :article_id
       f.input :headline
       f.input :author
       f.input :content

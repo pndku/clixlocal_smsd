@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803024061) do
+ActiveRecord::Schema.define(:version => 20120803024062) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20120803024061) do
   add_index "kpis", ["date"], :name => "index_kpis_on_date", :unique => true
 
   create_table "posts", :force => true do |t|
-    t.integer  "article_id"
+    t.string   "article_id"
     t.string   "headline"
     t.string   "author"
     t.text     "content"

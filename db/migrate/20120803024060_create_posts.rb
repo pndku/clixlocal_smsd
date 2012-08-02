@@ -10,8 +10,8 @@ class CreatePosts < ActiveRecord::Migration
       t.string :media_provider, :limit => 255
       t.datetime :publish_date, :default => nil
       t.string :blog_post_sentiment, :limit => 255
-      t.string :signal_tag_sentiment, :limit => 255
-      t.integer :priority, :default => 0
+      t.signal_tag_sentiment :signal_tag_sentiment, :limit => 255
+      t.priority :integer, :default => 0
     end
   end
 
