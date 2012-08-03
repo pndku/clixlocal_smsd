@@ -11,7 +11,7 @@ class CsvDb
         if attributes.empty?
           attributes = row
         else
-          target_model = model_name.constantize
+          target_model = model_name.classify.constantize
           new_object = target_model.new
 
           attributes.each do |attribute|

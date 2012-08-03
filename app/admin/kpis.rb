@@ -1,6 +1,6 @@
-ActiveAdmin.register Kpis do
+ActiveAdmin.register Kpi do
 
-  menu :priority => 1, :if => proc{ can?(:manage, Kpis) }
+  menu :priority => 1, :if => proc{ can?(:manage, Kpi) }
   controller.authorize_resource
 
   sidebar :actions, :only => :index do
@@ -15,7 +15,7 @@ ActiveAdmin.register Kpis do
   end
 
   collection_action :truncate_table, :method=>:get do
-    if Kpis.delete_all
+    if Kpi.delete_all
       flash[:notice] = "Table has been truncated successfully!"
     else
       flash[:notice] = "Table truncate failed!"
@@ -26,7 +26,7 @@ ActiveAdmin.register Kpis do
   collection_action :import_csv, :method=>:post do
     dump_file = (params.has_key?(:dump) && params[:dump].has_key?(:file)) ? params[:dump][:file] : nil
     if !dump_file.nil?
-      CsvDb.import_csv("Kpis", dump_file)
+      CsvDb.import_csv("Kpi", dump_file)
       flash[:notice] = "CSV imported successfully!"
       redirect_to :action => :index
     else

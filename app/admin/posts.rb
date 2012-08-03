@@ -53,7 +53,6 @@ ActiveAdmin.register Post do
     f.inputs "Source" do
       f.input :article_url
       f.input :media_provider
-      f.input :media_provider
       f.input :publish_date
     end
     f.inputs "Statistics" do
