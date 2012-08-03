@@ -1,6 +1,7 @@
 ActiveAdmin.register Post do
 
-  menu :priority => 2
+  menu :priority => 2, :if => proc{ can?(:manage, Post) }
+  controller.authorize_resource
 
   sidebar :actions, :only => :index do
     ul do

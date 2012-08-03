@@ -1,6 +1,7 @@
 ActiveAdmin.register Kpis do
 
-  menu :priority => 1
+  menu :priority => 1, :if => proc{ can?(:manage, Kpis) }
+  controller.authorize_resource
 
   sidebar :actions, :only => :index do
     ul do

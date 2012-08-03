@@ -1,6 +1,7 @@
 ActiveAdmin.register AdminUser do
 
-  menu :priority => 4
+  menu :priority => 4, :if => proc{ can?(:manage, AdminUser) }
+  controller.authorize_resource
 
   index do
     column :email
