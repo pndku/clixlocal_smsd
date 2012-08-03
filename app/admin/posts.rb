@@ -3,11 +3,23 @@ ActiveAdmin.register Post do
   menu :priority => 2
 
   sidebar :actions, :only => :index do
-    button_to "Import CSV", :action => :upload_csv
+    ul do
+      li link_to "Import CSV", :action => :upload_csv
+      li link_to "Truncate table", {:action => :truncate_table}, {:confirm => "Are you sure?"}
+    end
   end
 
-  collection_action :upload_csv, :method=>:post do
+  collection_action :upload_csv, :method=>:get do
     render "admin/csv/upload_csv", :handler => :haml
+  end
+
+  collection_action :truncate_table, :method=>:get do
+    if Post.delete_all
+      flash[:notice] = "Table has been truncated successfully!"
+    else
+      flash[:notice] = "Table truncate failed!"
+    end
+    redirect_to :action => :index
   end
 
   collection_action :import_csv, :method=>:post do
