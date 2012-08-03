@@ -1,6 +1,6 @@
 ActiveAdmin::Dashboards.build do
 
-  section "Posts per week", :priority => 1, :if => Post.last.present? do
+  section "Posts per week", :priority => 1, :if => proc{ Post.last.present? } do
     posts = Post.all :select => "COUNT(*) AS count, date_trunc('week', MAX(publish_date))::date AS week_start",
                      :group => 'EXTRACT(WEEK FROM publish_date), EXTRACT(YEAR FROM publish_date)',
                      :order => 'week_start ASC'
@@ -22,7 +22,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "Post sources", :priority => 2, :if => Post.last.present? do
+  section "Post sources", :priority => 2, :if => proc{ Post.last.present? } do
     posts = Post.all :select => "COUNT(*) AS count, media_provider",
                      :group => 'media_provider'
 
@@ -55,7 +55,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "Post blog sentiments", :priority => 3, :if => Post.last.present? do
+  section "Post blog sentiments", :priority => 3, :if => proc{ Post.last.present? } do
     posts = Post.all :select => "COUNT(*) AS count, blog_post_sentiment",
                      :conditions => "blog_post_sentiment != ''",
                      :group => 'blog_post_sentiment'
@@ -95,7 +95,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "Last status", :priority => 100, :if => Status.last.present? do
+  section "Last status", :priority => 100, :if => proc{ Status.last.present? } do
     last_status = Status.last
     div do
       b "Posted at #{last_status.created_at}: "
