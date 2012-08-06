@@ -1,20 +1,54 @@
 ActiveAdmin::Dashboards.build do
 
-  section "Posts per week", :priority => 1, :if => proc{ Post.last.present? } do
+  section "00001773 - LGBT Case Daily Volume", :priority => 1, :if => proc{ Kpi.last.present? }  do
+    last_kpi = Kpi.last
+    kpis = Kpi.all :conditions => "date BETWEEN (date '#{last_kpi.date}' - integer '7') AND '#{last_kpi.date}'",
+                   :order => 'date DESC'
+
+    categories = (last_kpi.date - 6).upto(last_kpi.date).collect{|day| day.to_s }
+    series = categories.collect{|date|
+      required_kpi = kpis.select{|kpi|
+        kpi.date.to_s == date.to_s
+      }
+      required_kpi.empty? ? nil : required_kpi[0]
+    }
+
+    chart = Highcharts.new
+    chart.chart({:renderTo => 'kpi_daily_volume_graph'})
+    chart.title('')
+    chart.xAxis([{:categories => categories}])
+    chart.yAxis([{:title => '', :min => 0}])
+    chart.legend({:layout => 'vertical', :align => 'right', :verticalAlign => 'top'})
+    chart.series([
+                   {:name => 'Petition signatures', :data => series.collect{|row| row.nil? ? 0 : row.petition_signatures}},
+                   {:name => 'Petition recommendations', :data => series.collect{|row| row.nil? ? 0 : row.petition_recommendations}},
+                   {:name => 'Tweets', :data => series.collect{|row| row.nil? ? 0 : row.tweets}},
+                   {:name => 'Facebook discussions', :data => series.collect{|row| row.nil? ? 0 : row.facebook_discussions}},
+                   {:name => 'Negative reviews on bhbhc facebook page', :data => series.collect{|row| row.nil? ? 0 : row.negative_reviews_on_bhbhc_fb}},
+                   {:name => 'Negative reviews on barnabas health facebook page', :data => series.collect{|row| row.nil? ? 0 : row.negative_reviews_on_barnabas_health_fb}},
+                   {:name => 'Email complaints', :data => series.collect{|row| row.nil? ? 0 : row.email_complaints}}
+                 ])
+
+    div do
+      render :partial => "kpi_daily_volume", :locals => {:chart => chart}
+    end
+  end
+
+  section "Posts per week", :priority => 2, :if => proc{ Post.last.present? } do
     posts = Post.all :select => "COUNT(*) AS count, date_trunc('week', MAX(publish_date))::date AS week_start",
                      :group => 'EXTRACT(WEEK FROM publish_date), EXTRACT(YEAR FROM publish_date)',
                      :order => 'week_start ASC'
 
-    x_labels = posts.collect{|row| row.week_start.to_s}
-    y_posts = posts.collect{|row| row.count.to_i }
+    categories = posts.collect{|row| row.week_start.to_s}
+    series = posts.collect{|row| row.count.to_i }
 
     chart = Highcharts.new
     chart.chart({:renderTo => 'posts_per_week_graph'})
     chart.title('')
-    chart.xAxis([{:categories => x_labels}])
+    chart.xAxis([{:categories => categories}])
     chart.yAxis([{:title => 'Posts amount', :min => 0}])
     chart.series([
-                     {:name => 'Posts amount', :yAxis => 0, :type => 'line', :data => y_posts}
+                     {:name => 'Posts amount', :yAxis => 0, :type => 'line', :data => series}
                  ])
 
     div do
@@ -22,7 +56,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "Post sources", :priority => 2, :if => proc{ Post.last.present? } do
+  section "Post sources", :priority => 3, :if => proc{ Post.last.present? } do
     posts = Post.all :select => "COUNT(*) AS count, media_provider",
                      :group => 'media_provider'
 
@@ -55,7 +89,7 @@ ActiveAdmin::Dashboards.build do
     end
   end
 
-  section "Post blog sentiments", :priority => 3, :if => proc{ Post.last.present? } do
+  section "Post blog sentiments", :priority => 4, :if => proc{ Post.last.present? } do
     posts = Post.all :select => "COUNT(*) AS count, blog_post_sentiment",
                      :conditions => "blog_post_sentiment != ''",
                      :group => 'blog_post_sentiment'
@@ -98,50 +132,9 @@ ActiveAdmin::Dashboards.build do
   section "Last status", :priority => 100, :if => proc{ Status.last.present? } do
     last_status = Status.last
     div do
-      b "Posted at #{last_status.created_at}: "
+      b "Posted at #{last_status.created_at.to_s}: "
       span last_status.content
     end
   end
-
-  # Define your dashboard sections here. Each block will be
-  # rendered on the dashboard in the context of the view. So just
-  # return the content which you would like to display.
-
-  # == Simple Dashboard Section
-  # Here is an example of a simple dashboard section
-  #
-  #   section "Recent Posts" do
-  #     ul do
-  #       Post.recent(5).collect do |post|
-  #         li link_to(post.title, admin_post_path(post))
-  #       end
-  #     end
-  #   end
-
-  # == Render Partial Section
-  # The block is rendered within the context of the view, so you can
-  # easily render a partial rather than build content in ruby.
-  #
-  #   section "Recent Posts" do
-  #     div do
-  #       render 'recent_posts' # => this will render /app/views/admin/dashboard/_recent_posts.html.erb
-  #     end
-  #   end
-
-  # == Section Ordering
-  # The dashboard sections are ordered by a given priority from top left to
-  # bottom right. The default priority is 10. By giving a section numerically lower
-  # priority it will be sorted higher. For example:
-  #
-  #   section "Recent Posts", :priority => 10
-  #   section "Recent User", :priority => 1
-  #
-  # Will render the "Recent Users" then the "Recent Posts" sections on the dashboard.
-
-  # == Conditionally Display
-  # Provide a method name or Proc object to conditionally render a section at run time.
-  #
-  # section "Membership Summary", :if => :memberships_enabled?
-  # section "Membership Summary", :if => Proc.new { current_admin_user.account.memberships.any? }
 
 end
