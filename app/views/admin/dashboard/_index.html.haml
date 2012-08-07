@@ -18,14 +18,6 @@
 
   -if locals[:last_post].present?
     %tr
-      %td{:colspan => 2}
-        .dashboard_section.panel
-          %h3 Posts per week
-          .panel_contents
-            #posts_per_week_graph{:style => "width: 100%; height: 350px;"}= locals[:posts_per_week_graph]
-
-  -if locals[:last_post].present?
-    %tr
       %td{:width => "50%"}
         .dashboard_section.panel
           %h3 Post sources

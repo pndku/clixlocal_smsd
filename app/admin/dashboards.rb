@@ -2,7 +2,7 @@ ActiveAdmin::Dashboards.build do
 
   section "Last update: " + (Status.last.present? ? Status.last.created_at.to_s : "never"), :priority => 0 do
     div do
-      #SECTION 1
+      #kpi_daily_volume_graph
       last_kpi = Kpi.last
       kpis = Kpi.all :conditions => "date BETWEEN (date '#{last_kpi.date}' - integer '7') AND '#{last_kpi.date}'"
 
@@ -30,25 +30,7 @@ ActiveAdmin::Dashboards.build do
                        {:name => 'Email complaints', :data => series.collect{|row| row.nil? ? 0 : row.email_complaints}}
                    ])
 
-      #SECTION 2
-      posts = Post.all :select => "COUNT(*) AS count, date_trunc('week', MAX(publish_date))::date AS week_start",
-                       :conditions => "publish_date >= (current_timestamp - interval '70 days')",
-                       :group => 'EXTRACT(WEEK FROM publish_date), EXTRACT(YEAR FROM publish_date)',
-                       :order => 'week_start ASC'
-
-      categories = posts.collect{|row| row.week_start.to_s}
-      series = posts.collect{|row| row.count.to_i }
-
-      posts_per_week_graph = Highcharts.new
-      posts_per_week_graph.chart({:renderTo => 'posts_per_week_graph'})
-      posts_per_week_graph.title('')
-      posts_per_week_graph.xAxis([{:categories => categories}])
-      posts_per_week_graph.yAxis([{:title => 'Posts amount', :min => 0}])
-      posts_per_week_graph.series([
-                       {:name => 'Posts amount', :yAxis => 0, :type => 'line', :data => series}
-                   ])
-
-      #SECTION 3
+      #post_sources_graph
       posts = Post.all :select => "COUNT(*) AS count, media_provider",
                        :group => 'media_provider'
 
@@ -76,7 +58,7 @@ ActiveAdmin::Dashboards.build do
                        {:type => 'pie', :data => series}
                    ])
 
-      #SECTION 4
+      #post_blog_sentiment_graph
       posts = Post.all :select => "COUNT(*) AS count, blog_post_sentiment",
                        :conditions => "blog_post_sentiment != ''",
                        :group => 'blog_post_sentiment'
@@ -111,12 +93,12 @@ ActiveAdmin::Dashboards.build do
                         })
       post_blog_sentiment_graph.series(series.collect{|row| {:name => row[0], :data => [row[1]]}})
 
+      #final render
       render "admin/dashboard/index", :handler => :haml, :locals => {
           :last_status => Status.last,
           :last_kpi => Kpi.last,
           :last_post => Post.last,
           :kpi_daily_volume_graph => kpi_daily_volume_graph,
-          :posts_per_week_graph => posts_per_week_graph,
           :post_sources_graph => post_sources_graph,
           :post_blog_sentiment_graph => post_blog_sentiment_graph,
       }
