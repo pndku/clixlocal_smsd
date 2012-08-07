@@ -25,6 +25,26 @@
             #post_sources_graph{:style => "width: 100%; height: 350px;"}= locals[:post_sources_graph]
       %td{:width => "50%"}
         .dashboard_section.panel
+          %h3 High priority posts
+          .panel_contents
+            %table.index_table
+              %tr
+                %th Publish date
+                %th Media provider
+                %th Author
+                %th Content
+              -locals[:high_priority_posts].each do |post|
+                %tr.even
+                  %td= post.publish_date.to_s
+                  %td= post.media_provider
+                  %td= post.author
+                  %td= post.content
+
+  -if locals[:last_post].present?
+    %tr
+      %td{:width => "50%"}
+        .dashboard_section.panel
           %h3 Post blog sentiments
           .panel_contents
             #post_blog_sentiment_graph{:style => "width: 100%; height: 350px;"}= locals[:post_blog_sentiment_graph]
+      %td{:width => "50%"}

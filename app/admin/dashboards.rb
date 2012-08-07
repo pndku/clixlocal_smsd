@@ -58,6 +58,10 @@ ActiveAdmin::Dashboards.build do
                        {:type => 'pie', :data => series}
                    ])
 
+      #high_priority_posts
+      high_priority_posts = Post.all :order => 'priority DESC',
+                                     :limit => 10
+
       #post_blog_sentiment_graph
       posts = Post.all :select => "COUNT(*) AS count, blog_post_sentiment",
                        :conditions => "blog_post_sentiment != ''",
@@ -100,6 +104,7 @@ ActiveAdmin::Dashboards.build do
           :last_post => Post.last,
           :kpi_daily_volume_graph => kpi_daily_volume_graph,
           :post_sources_graph => post_sources_graph,
+          :high_priority_posts => high_priority_posts,
           :post_blog_sentiment_graph => post_blog_sentiment_graph,
       }
     end
