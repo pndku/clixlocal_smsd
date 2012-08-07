@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803024062) do
+ActiveRecord::Schema.define(:version => 20120807220643) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -46,6 +46,21 @@ ActiveRecord::Schema.define(:version => 20120803024062) do
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
 
+  create_table "influencer_types", :force => true do |t|
+    t.string "name"
+  end
+
+  add_index "influencer_types", ["name"], :name => "index_influencer_types_on_name", :unique => true
+
+  create_table "influencers", :force => true do |t|
+    t.integer "influencerType_id"
+    t.string  "name"
+    t.string  "url"
+    t.integer "followers",         :default => 0
+  end
+
+  add_index "influencers", ["name"], :name => "index_influencers_on_name", :unique => true
+
   create_table "kpis", :force => true do |t|
     t.date    "date"
     t.integer "petition_signatures",                    :default => 0
@@ -71,6 +86,18 @@ ActiveRecord::Schema.define(:version => 20120803024062) do
     t.string   "signal_tag_sentiment"
     t.integer  "priority",             :default => 0
   end
+
+  add_index "posts", ["article_id"], :name => "index_posts_on_article_id", :unique => true
+
+  create_table "properties", :force => true do |t|
+    t.string  "name"
+    t.string  "url"
+    t.integer "followers",   :default => 0
+    t.integer "updates",     :default => 0
+    t.integer "engagements", :default => 0
+  end
+
+  add_index "properties", ["name"], :name => "index_properties_on_name", :unique => true
 
   create_table "statuses", :force => true do |t|
     t.text     "content"

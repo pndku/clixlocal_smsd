@@ -36,10 +36,10 @@ ActiveAdmin.register Post do
   end
 
   index do
-    column :article_id
-    column :headline
-    column :author
     column :publish_date
+    column :media_provider
+    column :author
+    column :content
     default_actions
   end
 

@@ -2,10 +2,9 @@ ActiveAdmin::Dashboards.build do
 
   section "Last update: " + (Status.last.present? ? Status.last.created_at.to_s : "never"), :priority => 0 do
     div do
-      #SECTION ONE
+      #SECTION 1
       last_kpi = Kpi.last
-      kpis = Kpi.all :conditions => "date BETWEEN (date '#{last_kpi.date}' - integer '7') AND '#{last_kpi.date}'",
-                     :order => 'date DESC'
+      kpis = Kpi.all :conditions => "date BETWEEN (date '#{last_kpi.date}' - integer '7') AND '#{last_kpi.date}'"
 
       categories = (last_kpi.date - 6).upto(last_kpi.date).collect{|day| day.to_s }
       series = categories.collect{|date|

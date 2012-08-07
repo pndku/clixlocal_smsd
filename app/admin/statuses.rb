@@ -1,6 +1,6 @@
 ActiveAdmin.register Status do
 
-  menu :priority => 3, :if => proc{ can?(:manage, Status) }
+  menu :priority => 99, :if => proc{ can?(:manage, Status) }
   controller.authorize_resource
 
   index do
