@@ -42,13 +42,13 @@
                 %th Publish date
                 %th Media provider
                 %th Author
-                %th Content
+                %th
               -locals[:high_priority_posts].each do |post|
-                %tr.even
-                  %td= post.publish_date.to_s
+                %tr{:class => cycle('odd', 'even')}
+                  %td= post.publish_date.to_s(:db)
                   %td= post.media_provider
                   %td= post.author
-                  %td= post.content
+                  %td= link_to "Show", admin_post_path(post)
 
   -if locals[:last_post].present?
     %tr
