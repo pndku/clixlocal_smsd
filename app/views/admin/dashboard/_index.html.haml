@@ -3,12 +3,12 @@
 
 %table
 
-  -if locals[:last_status].present?
+  - if locals[:last_status].present?
     %tr
       %td{:colspan => 2}
         %p= locals[:last_status].content
 
-  -if locals[:last_kpi].present?
+  - if locals[:last_kpi].present?
     %tr
       %td{:colspan => 2}
         .dashboard_section.panel
@@ -25,8 +25,7 @@
                 window.location.search = '?kpi_daily_volume_graph_period=' + $(this).val();
               });
 
-
-  -if locals[:last_post].present?
+  - if locals[:last_post].present?
     %tr
       %td{:width => "50%"}
         .dashboard_section.panel
@@ -48,9 +47,13 @@
                   %td= post.publish_date.to_s(:db)
                   %td= post.media_provider
                   %td= post.author
-                  %td= link_to "Show", admin_post_path(post)
+                  %td
+                    =link_to "Discuss", admin_post_path(post)
+                    - if post.article_url.present?
+                      |
+                      =link_to "View original", post.article_url
 
-  -if locals[:last_post].present?
+  - if locals[:last_post].present?
     %tr
       %td{:width => "50%"}
         .dashboard_section.panel

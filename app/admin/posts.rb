@@ -3,6 +3,17 @@ ActiveAdmin.register Post do
   menu :priority => 2, :if => proc{ can?(:manage, Post) }
   controller.authorize_resource
 
+  scope :high_priority do |posts|
+    posts.fresh.prioritized("High")
+    end
+  scope :medium_priority do |posts|
+    posts.fresh.prioritized("Medium")
+  end
+  scope :low_priority do |posts|
+    posts.fresh.prioritized("Low")
+  end
+
+
   sidebar :actions, :only => :index do
     ul do
       li link_to "Import CSV", :action => :upload_csv
@@ -60,7 +71,7 @@ ActiveAdmin.register Post do
       f.input :signal_tag_sentiment
     end
     f.inputs "Priority" do
-      f.input :priority
+      f.input :postPriority, :label => "Post priority"
     end
     f.buttons
   end

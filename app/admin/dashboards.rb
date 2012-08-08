@@ -12,7 +12,7 @@ ActiveAdmin::Dashboards.build do
           :kpi_daily_volume_graph_period => kpi_daily_volume_graph_period,
           :kpi_daily_volume_graph => DashboardHelper.build_kpi_daily_volume_graph(kpi_daily_volume_graph_period),
           :post_sources_graph => DashboardHelper.build_post_sources_graph,
-          :high_priority_posts => Post.all(:order => 'priority DESC', :limit => 10),
+          :high_priority_posts => Post.fresh.prioritized("High").all(:limit => 5),
           :post_blog_sentiment_graph => DashboardHelper.build_post_blog_sentiment_graph
       }
     end
