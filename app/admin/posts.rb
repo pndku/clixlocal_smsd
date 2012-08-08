@@ -76,4 +76,20 @@ ActiveAdmin.register Post do
     f.buttons
   end
 
+  show do |f|
+    attributes_table do
+      row :id
+      row :article_id
+      row :headline
+      row :author
+      row :content
+      row :article_url
+      row :media_provider
+      row :publish_date
+      row :blog_post_sentiment
+      row :signal_tag_sentiment
+    end
+    active_admin_comments
+  end
+
 end
