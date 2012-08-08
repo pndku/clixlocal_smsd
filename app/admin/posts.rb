@@ -88,6 +88,7 @@ ActiveAdmin.register Post do
       row :publish_date
       row :blog_post_sentiment
       row :signal_tag_sentiment
+      row :postPriority
     end
     active_admin_comments
   end
