@@ -15,6 +15,16 @@
           %h3 00001773 - LGBT Case Daily Volume
           .panel_contents
             #kpi_daily_volume_graph{:style => "width: 100%; height: 350px;"}= locals[:kpi_daily_volume_graph]
+            %br
+            %span Period:
+            %select#kpi_daily_volume_graph_period
+              -{7 => "1 week", 14 => "2 weeks", 30 => "1 month", 91 => "3 months"}.each do |key, value|
+                %option{:value => key, :selected => locals[:kpi_daily_volume_graph_period] == key}= value
+            :javascript
+              $('#kpi_daily_volume_graph_period').change(function(){
+                window.location.search = '?kpi_daily_volume_graph_period=' + $(this).val();
+              });
+
 
   -if locals[:last_post].present?
     %tr
