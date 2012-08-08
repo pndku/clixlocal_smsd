@@ -6,14 +6,17 @@ ActiveAdmin.register AdminUser do
   index do
     column :email
     column :current_sign_in_at
-    column :last_sign_in_at
-    column :sign_in_count
+    column :last_name
+    column :department
     default_actions
   end
 
   form do |f|
     f.inputs "Admin Details" do
       f.input :email
+      f.input :first_name
+      f.input :last_name
+      f.input :department
     end
     f.buttons
   end
