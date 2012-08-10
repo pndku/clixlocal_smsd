@@ -3,14 +3,8 @@ ActiveAdmin.register Post do
   menu :priority => 2, :if => proc{ can?(:manage, Post) }
   controller.authorize_resource
 
-  scope :high_priority do |posts|
-    posts.fresh.prioritized("High")
-    end
-  scope :medium_priority do |posts|
-    posts.fresh.prioritized("Medium")
-  end
-  scope :low_priority do |posts|
-    posts.fresh.prioritized("Low")
+  scope :important do |posts|
+    posts.fresh.important
   end
 
 
@@ -70,8 +64,8 @@ ActiveAdmin.register Post do
       f.input :blog_post_sentiment
       f.input :signal_tag_sentiment
     end
-    f.inputs "Priority" do
-      f.input :postPriority, :label => "Post priority"
+    f.inputs "Importance" do
+      f.input :important
     end
     f.buttons
   end
@@ -88,7 +82,7 @@ ActiveAdmin.register Post do
       row :publish_date
       row :blog_post_sentiment
       row :signal_tag_sentiment
-      row :postPriority
+      row :important
     end
     active_admin_comments
   end
