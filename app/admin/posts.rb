@@ -31,12 +31,12 @@ ActiveAdmin.register Post do
   collection_action :import_csv, :method=>:post do
     dump_file = (params.has_key?(:dump) && params[:dump].has_key?(:file)) ? params[:dump][:file] : nil
     if !dump_file.nil?
-      CsvDb.import_csv("Post", dump_file)
+      CsvDb.import_csv("Post", dump_file, {:replace_with_key => "article_id"})
       flash[:notice] = "CSV imported successfully!"
-      redirect_to :action => :index
+      #redirect_to :action => :index
     else
       flash[:notice] = "CSV import failed!"
-      redirect_to :action => :upload_csv
+      #redirect_to :action => :upload_csv
     end
   end
 
