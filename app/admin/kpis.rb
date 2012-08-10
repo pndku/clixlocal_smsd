@@ -26,7 +26,7 @@ ActiveAdmin.register Kpi do
   collection_action :import_csv, :method=>:post do
     dump_file = (params.has_key?(:dump) && params[:dump].has_key?(:file)) ? params[:dump][:file] : nil
     if !dump_file.nil?
-      CsvDb.import_csv("Kpi", dump_file)
+      CsvDb.import_csv("Kpi", dump_file, {:replace_with_key => "date"})
       flash[:notice] = "CSV imported successfully!"
       redirect_to :action => :index
     else
