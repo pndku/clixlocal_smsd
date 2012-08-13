@@ -36,22 +36,20 @@
         .dashboard_section.panel
           %h3 High priority posts
           .panel_contents
-            %table.index_table
-              %tr
-                %th Publish date
-                %th Media provider
-                %th Author
-                %th
+            %div.posts
               -locals[:high_priority_posts].each do |post|
-                %tr{:class => cycle('odd', 'even')}
-                  %td= post.publish_date.to_s(:db)
-                  %td= post.media_provider
-                  %td= post.author
-                  %td
-                    =link_to "Discuss", admin_post_path(post)
-                    - if post.article_url.present?
-                      |
-                      =link_to "View original", post.article_url
+                %div.post
+                  %div.avatar
+                    =image_tag "facebook-avatar.gif"
+                  %div.data
+                    %h2= post.author
+                    %div.publish_date= distance_of_time_in_words_to_now(post.publish_date)
+                    %div.content= post.content
+                    %div.links
+                      =link_to "Discuss", admin_post_path(post)
+                      - if post.article_url.present?
+                        |
+                        =link_to "View original", post.article_url
 
   - if locals[:last_post].present?
     %tr

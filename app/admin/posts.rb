@@ -3,6 +3,10 @@ ActiveAdmin.register Post do
   menu :priority => 2, :if => proc{ can?(:manage, Post) }
   controller.authorize_resource
 
+  scope :all do |posts|
+    posts.fresh
+  end
+
   scope :important do |posts|
     posts.fresh.important
   end

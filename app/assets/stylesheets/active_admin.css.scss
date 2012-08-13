@@ -5,6 +5,46 @@
 // To customize the Active Admin interfaces, add your
 // styles here:
 
+// dashboard widgets layout fix
 table.dashboard > tbody > tr > td {
   display: block;
+}
+
+// dashboard posts widget
+table.dashboard div.posts div.post {
+  position: relative;
+  margin: 0 0 15px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #999999;
+}
+
+table.dashboard div.posts div.post div.avatar {
+  float: left;
+  width: 50px;
+  height: 100%;
+  margin: 0 10px 0 0;
+  overflow: hidden;
+}
+
+table.dashboard div.posts div.post div.data {
+  margin: 0 0 0 60px;
+  clear: right;
+}
+
+table.dashboard div.posts div.post div.data h2 {
+  float: left;
+  margin: 0 10px 0 0;
+  color: #297ce0;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+table.dashboard div.posts div.post div.data div.publish_date {
+  color: #999999;
+  font-size: 0.95em;
+  clear: right;
+}
+
+table.dashboard div.posts div.post div.data div.links a {
+  color: #297ce0;
 }
