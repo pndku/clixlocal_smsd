@@ -59,7 +59,7 @@ Smsd::Application.configure do
   config.active_support.deprecation = :notify
 
   # Mailer configuration
-  config.action_mailer.default_url_options = { :host => 'upost-admin.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'clixlocal-smsd.herokuapp.com' }
   ActionMailer::Base.smtp_settings = {
       :address        => "smtp.sendgrid.net",
       :port           => "25",
