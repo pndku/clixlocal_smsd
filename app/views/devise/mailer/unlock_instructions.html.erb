@@ -1,4 +1,4 @@
-<p>Hi <%= @resource.first_name.blank? @resource.email : @resource.first_name %>!</p>
+<p>Hi <%= @resource.first_name.present? ? @resource.first_name : @resource.email %>,</p>
 
 <p>Your account has been locked due to an excessive amount of unsuccessful sign in attempts.</p>
 

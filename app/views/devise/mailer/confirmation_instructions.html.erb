@@ -1,4 +1,4 @@
-<p>Welcome <%= @resource.first_name.blank? @resource.email : @resource.first_name %>!</p>
+<p>Welcome <%= @resource.first_name.present? ? @resource.first_name : @resource.email %>,</p>
 
 <p>You can confirm your account email through the link below:</p>
 
