@@ -40,7 +40,6 @@ class CsvDb
           else
             new_object.save
           end
-
         end
       end
     end
