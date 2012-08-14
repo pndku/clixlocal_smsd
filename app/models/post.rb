@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   validates :content, :presence => true
 
   def important=(value)
-    if [true, "true", 1, "1"].include?(value)
+    if [true, "true", "TRUE", 1, "1"].include?(value)
       value = true
     else
       value = false
