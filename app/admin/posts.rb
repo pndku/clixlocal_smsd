@@ -11,7 +11,6 @@ ActiveAdmin.register Post do
     posts.fresh.important
   end
 
-
   sidebar :actions, :only => :index do
     ul do
       li link_to "Import CSV", :action => :upload_csv
